@@ -1,6 +1,6 @@
 # email-text-summarisation
 
-## Using NLP to summarize price-related email conversations between retailers and suppliers
+### Using NLP to summarize price-related email conversations between retailers and suppliers
 
 Data Preprocessing:
 
