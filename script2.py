@@ -13,6 +13,14 @@ Visualize key information using word clouds or other techniques.
 
 Integration:
 Integrate the summarization process into your workflow for easy analysis and decision-making.
+
+---------------------------------------------------------------------------------------
+Before running the code, make sure to install the required packages using:
+
+pip install beautifulsoup4 spacy sumy nltk
+python -m spacy download en_core_web_sm
+---------------------------------------------------------------------------------------
+
 '''
 
 
