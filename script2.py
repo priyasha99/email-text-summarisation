@@ -27,7 +27,6 @@ python -m spacy download en_core_web_sm
 import os
 import re
 import email
-import nltk
 from bs4 import BeautifulSoup
 import spacy
 from sumy.parsers.plaintext import PlaintextParser
@@ -37,15 +36,15 @@ from nltk.sentiment.vader import SentimentIntensityAnalyzer
 # Step 1: Data Preprocessing
 def extract_text_from_eml(file_path):
     with open(file_path, 'rb') as file:
-        # Use chardet to automatically detect the encoding
-        raw_data = file.read()
-        result = chardet.detect(raw_data)
-        encoding = result['encoding']
+        msg = email.message_from_binary_file(file)
+        text_content = ""
 
-        # Decode the content using the detected encoding
-        text_content = raw_data.decode(encoding, 'ignore')
+        # Iterate through parts of the email
+        for part in msg.walk():
+            if part.get_content_type() == "text/plain":
+                text_content += part.get_payload(decode=True).decode('utf-8', 'ignore')
 
-    return text_content
+        return text_content
 
 # Step 2: Named Entity Recognition (NER)
 nlp = spacy.load("en_core_web_sm")
@@ -69,7 +68,7 @@ def sentiment_analysis(text):
     return sentiment_score
 
 # Step 5: Example Usage
-file_path = "path/to/your/email.eml"
+file_path = "email1.eml"
 text_content = extract_text_from_eml(file_path)
 entities = extract_entities(text_content)
 summary = text_summarization(text_content)
